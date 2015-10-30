@@ -20,14 +20,13 @@ Ohai.plugin(:IPMI) do
   provides 'ipmi'
 
   collect_data do
+    so = shell_out('ipmitool lan print')
 
-    so = shell_out("ipmitool lan print")
-    
     if so.stdout =~ /IP Address\s+: ([0-9.]+).*MAC Address\s+: ([a-z0-9:]+)/m
-      
+
       ipmi Mash.new
-      ipmi[:address] = $1
-      ipmi[:mac_address] = $2
+      ipmi[:address] = Regexp.last_match(1)
+      ipmi[:mac_address] = Regexp.last_match(2)
 
     end
   end
