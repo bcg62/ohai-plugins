@@ -50,27 +50,27 @@ Ohai.plugin(:LLDP) do
         case key
         when 'sysName', 'MTU'
           so.stdout.split("\n").each do |line|
-            lldp[iface][key] = Regexp.last_match(1) if line.match(/^\s+(.*)/)
+            lldp[iface][key] = Regexp.last_match(1) if line =~ /^\s+(.*)/
           end
         when 'chassisID'
           so.stdout.split("\n").each do |line|
-            lldp[iface][key] = Regexp.last_match(1) if line.match(/MAC:\s+(.*)/)
+            lldp[iface][key] = Regexp.last_match(1) if line =~ /MAC:\s+(.*)/
           end
         when 'portID'
           so.stdout.split("\n").each do |line|
-            lldp[iface][key] = Regexp.last_match(1) if line.match(/(?:Ifname|Local):\s+(.*)/)
+            lldp[iface][key] = Regexp.last_match(1) if line =~ /(?:Ifname|Local):\s+(.*)/
           end
         when 'mngAddr_ipv4'
           so.stdout.split("\n").each do |line|
-            lldp[iface][key] = Regexp.last_match(1) if line.match(/IPv4:\s+(.*)/)
+            lldp[iface][key] = Regexp.last_match(1) if line =~ /IPv4:\s+(.*)/
           end
         when 'mngAddr_ipv6'
           so.stdout.split("\n").each do |line|
-            lldp[iface][key] = Regexp.last_match(1) if line.match(/IPv6:\s+(.*)/)
+            lldp[iface][key] = Regexp.last_match(1) if line =~ /IPv6:\s+(.*)/
           end
         when 'PVID'
           so.stdout.split("\n").each do |line|
-            lldp[iface][key] = Regexp.last_match(1) if line.match(/(?:Info|PVID):\s+(.*)/)
+            lldp[iface][key] = Regexp.last_match(1) if line =~ /(?:Info|PVID):\s+(.*)/
           end
         end
       end
